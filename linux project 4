@@ -1,0 +1,126 @@
+Domain	Port	File Location
+1)cambodiahum.com	80	/training/it
+<VirtualHost *:80>
+ServerName cambodiahum.com                            
+DocumentRoot /training/it/cambodiahum.com
+</VirtualHost>
+             
+<Directory /training/it/cambodiahum.com>                                                                
+Require all granted                                          
+</Directory>
+
+2) gitlab.io	443	/var/www
+<VirtualHost *:443>
+ServerName gitlab.io                                
+DocumentRoot /var/www/gitlab.io
+</VirtualHost>             
+<Directory /var/www/gitlab.io>                                                                
+Require all granted                                        
+</Directory>
+
+3) alice.com	37275	/data/gamma
+<VirtualHost *:37275>
+ServerName alice.com                               
+DocumentRoot /data/gamma/alice.com
+</VirtualHost>                  
+<Directory /data/gamma/alice.com>
+Require all granted                             
+</Directory>
+
+4) criticsoak.com	31229	/policies
+<VirtualHost *:31229>
+ServerName criticsoak.com                                       
+DocumentRoot /policies/criticsoak.com                    
+</VirtualHost>                                      
+                                
+<Directory /policies/criticsoak.com>                                                                
+Require all granted                                           
+</Directory>
+
+Write the commands to setup the following MariaDB users with their password set to their username backwards.
+1) sean
+CREATE USER 'sean'@localhost IDENTIFIED BY 'naes';
+2) emilee
+CREATE USER 'emilee'@localhost IDENTIFIED BY 'eelime';
+3) cara
+CREATE USER 'cara'@localhost IDENTIFIED BY 'arac';
+
+Write the commands setup the following MariaDB databases with permissions.
+a)CREATE DATABASE mx;
+b)CREATE DATABASE jl;
+c)CREATE DATABASE orian;
+
+1) mx	sean=SELECT,emilee=ALL PRIVILEGES,cara=ALL PRIVILEGES
+- GRANT SELECT ON mx.* TO sean@localhost;
+- GRANT ALL PRIVILEGES ON mx.* to emilee@localhost;
+- GRANT ALL PRIVILEGES ON mx.* to cara@localhost;
+
+
+2) jl	sean=ALL PRIVILEGES,emilee=ALL PRIVILEGES,cara=ALL PRIVILEGES
+- GRANT ALL PRIVILEGES ON jl.* to sean@localhost;
+- GRANT ALL PRIVILEGES ON jl.* to emilee@localhost;
+- GRANT ALL PRIVILEGES ON jl.* to cara@localhost;
+
+
+orian	sean=ALL PRIVILEGES,emilee=SELECT,cara=ALL PRIVILEGES
+- GRANT ALL PRIVILEGES ON orian.* to sean@localhost;
+- GRANT SELECT ON orian.* TO emilee@localhost;
+- GRANT ALL PRIVILEGES ON orian.* to cara@localhost;
+
+
+Write the commands to setup wordpress, including the virtual host configuration, and a database and user setup called wordpress.
+step 1)Download the latest version
+wget http://wordpress.org/latest.tar.gz
+
+step 2) Extract the download Wordpress
+tar xzvf latest.tar.gz
+
+step 3) login into maria db
+
+mysql -u root -p
+3. Create a database in MariaDB for WordPress.
+CREATE DATABASE student;
+
+4. Create an user account in MariaDB and give permission to your Database
+CREATE USER 'wordpress'@localhost IDENTIFIED BY 'Welcome123';
+GRANT ALL PRIVILEGES ON student.* to wordpress@localhost;
+
+
+5. ./wordpress/wp-config-sample.php to ./wordpress/wp-config.php
+mv ./wordpress/wp-config-sample.php ./wordpress/wp-config.php
+
+6. Update the wp-config.php file with the correct values in Database
+Name, Database User, and Database Password:
+define('DB_NAME', "student");
+define('DB_USER', "wordpress");
+define('DB_PASSWORD', "Welcome123");
+
+
+7. Create 2 folders called uploads and cache
+mkdir ./wordpress/wp-content/uploads
+mkdir ./wordpress/wp-content/cache
+
+8. Change the owner of the 2 directories created to apache using
+chown apache:apache ./wordpress/wp-content/uploads
+chown apache:apache ./wordpress/wp-content/cache
+
+vhost file -> cat etc/httpd/vhosts/wordpress.patel.com.conf
+
+<VirtualHost *:80>
+        ServerName wordpress.patel.com
+        DocumentRoot /var/wordpress
+</VirtualHost>
+<VirtualHost *:443>
+        ServerName wordpress.patel.com
+        DocumentRoot /var/wordpress
+</VirtualHost>
+<Directory /var/wordpress>
+        Require all granted
+</Directory>
+
+9. Restart Apache.
+systemctl restart httpd
+systemctl status httpd
+
+10. Run the wordpress website 
+lynx http://wordpress.patel.com
