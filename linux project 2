@@ -1,0 +1,61 @@
+1) Is the following path relative or absolute?
+~/var/pdfs/docs/share/../home/www/../spool/
+Answer: Absolute
+
+2) Is the following path relative or absolute?
+~/../../.././ssh/nfsd/../docs/boot/.././www/
+Answer: Absolute
+
+3) Is the following path relative or absolute?
+../data/../remote/mnt/./mnt/lib64/spool/././var/
+Answer: relative
+
+4) Is the following path relative or absolute?
+../././lib64/tmp/usr/../training/../nfsd/share/lib64/
+Answer: relative
+
+5) Is the following path relative or absolute?
+./test/./../../users/media/../media/./root/../../nfsd/
+Answer: relative
+
+6) Is the following path relative or absolute?
+./ssh/./../man/./../pdfs/../var/
+Answer: relative
+
+7) Is the following path relative or absolute?
+~/log/root/./share/data/../../../spool/boot/./reports/../
+Answer:Absolute
+
+8)Is the following path relative or absolute?
+~/mnt/../pdfs/./../boot/nfsd/log/.././
+Answer: Absolute
+
+9) Is the following path relative or absolute?
+../docs/media/usr/home/users/tmp/share/opt/../opt/../
+Answer:	relative
+
+10)	Is the following path relative or absolute?
+../././pdfs/mnt/boot/log/../pdfs/./../../data/../
+Answer:	relative
+
+11)What would be your current working directory if you changed directories to /httpd/../var/mail/../home/boot/home/httpd/./man/grub/vsftpd/lib64/../usr/./
+Ans: /var/home/boot/home/httpd/man/grub/vsftpd/usr/
+
+12)What would be your current working directory if you changed directories to /lib64/reports/nfsd/test/www/etc/mail/../man/
+/lib64/reports/nfsd/test/www/etc/man/
+
+13) Create a BASH script, that takes one argument which is a folder, check that an argument has been provided, then check that the argument is a folder. On each of the parameter checks return appropriate error messages to the user. Then using a for loop, to create the following directories with the names /classdirs/class{number} (ex. class354, class355, class356 ...), the numbers should be from 354-1648. (Hint: you may have to create the parent directory first, or check that it exists). Finally copy the folder passed in as the parameter into each of the directories that the script just created.	
+#!/bin/bash
+if [[ -z $1 ]]; then
+echo "No argument passed this is a valid folder"
+elif [[ ! -d $1 ]];then
+echo "$1 folder does not exists"
+else
+for i in {354..1648}; do
+if [[ ! -d /classdirs ]];then
+mkdir /classdirs
+fi
+mkdir /classdirs/class$i
+cp $1 /clasdirs/class$i/$1
+done
+fi
