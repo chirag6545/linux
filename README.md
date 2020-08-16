@@ -1,0 +1,2 @@
+# linux
+About linux configuration
